@@ -1,0 +1,127 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Application styles*/
+#calculator {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: auto;
+}
+
+#readout {
+    font-size: 5em;
+    font-family: monospace;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#input {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+}
+
+label.tolerance-band {
+    padding-top: 20px;
+}
+
+.tolerance-band.input-group {
+    width: 215px;
+}
+
+#readout span.value {
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.input-group-addon {
+    width: 120px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+#calculate {
+    width: 100%;
+}
+
+#readout span.min-value, #readout span.max-value {
+    font-size: 0.5em;
+    align-self: center;
+    white-space: nowrap;
+}
+
+
+#resistor {
+    border: 1px solid black;
+    width: 100px;
+    height: 40px;
+}
+
+.resistor-lead {
+    height: 1px;
+    width: 50px;
+    border-top: 1px solid black;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    height: 200px;
+}
+
+.band {
+    width: 10px;
+    height: 40px;
+    background-color: transparent;
+}
+
+.band-spacer {
+    width: 5px;
+    height: 40px;
+}
+
+#resistor .band, #resistor .band-spacer {
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+
+    #input {
+        padding-left: 30px;
+    }
+
+    #simulator {
+        padding-top: 20px;
+    }
+
+    .flex-container {
+        height: 100px;
+    }
+}

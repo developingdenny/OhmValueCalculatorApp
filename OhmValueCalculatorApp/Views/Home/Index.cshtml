@@ -1,0 +1,251 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-xs-12 col-md-8">
+        <div id="calculator" class="well">
+            <div id="readout" class="">
+                <span class="min-value"></span>
+                <span class="value">------------&#8486</span>
+                <span class="max-value"></span>
+            </div>
+            <div id="input">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="error-message-container" class="alert alert-danger hidden" role="alert"><span id="error-message"></span></div>
+                    </div>
+                </div>
+                <div id="band-controls" class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <form method="post" action="CalculateOhmValue">
+                            <label>Band Colors</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">First Band</span>
+                                <select name="band1Color" class="form-control">
+                                    <option value="brown">Brown</option>
+                                    <option value="red">Red</option>
+                                    <option value="orange">Orange</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="violet">Violet</option>
+                                    <option value="gray">Gray</option>
+                                    <option value="white">White</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Second Band</span>
+                                <select name="band2Color" class="form-control">
+                                    <option value="">None</option>
+                                    <option value="black">Black</option>
+                                    <option value="brown">Brown</option>
+                                    <option value="red">Red</option>
+                                    <option value="orange">Orange</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="violet">Violet</option>
+                                    <option value="gray">Gray</option>
+                                    <option value="white">White</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Third Band</span>
+                                <select name="band3Color" class="form-control">
+                                    <option value="">None</option>
+                                    <option value="black">Black</option>
+                                    <option value="brown">Brown</option>
+                                    <option value="red">Red</option>
+                                    <option value="orange">Orange</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="violet">Violet</option>
+                                    <option value="gray">Gray</option>
+                                    <option value="white">White</option>
+                                </select>
+                            </div>
+
+                            <label class="tolerance-band">Tolerance Band Color</label>
+                            <div class="tolerance-band input-group">
+                                <select name="toleranceBandColor" class="form-control">
+                                    <option value="">None</option>
+                                    <option value="silver">Silver</option>
+                                    <option value="gold">Gold</option>
+                                    <option value="brown">Brown</option>
+                                    <option value="red">Red</option>
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="violet">Violet</option>
+                                </select>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+
+                    <div id="simulator" class="col-sm-6 col-xs-12">
+                        <label>Simulator</label>
+                        <div class="flex-container">
+                            <div class="resistor-lead"></div>
+                            <div id="resistor">
+                                <div class="band-spacer"></div>
+                                <div id="band1" class="band"></div>
+                                <div id="band2" class="band"></div>
+                                <div id="band3" class="band"></div>
+                                <div class="band-spacer"></div>
+                                <div class="band-spacer"></div>
+                                <div class="band-spacer"></div>
+                                <div id="tolerance-band" class="band"></div>
+                            </div>
+                            <div class="resistor-lead"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button id="calculate" class="btn btn-primary" type="submit">Calculate</button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+    $(function () {
+
+        var band1Ctrl = $("select[name='band1Color']");
+        var band2Ctrl = $("select[name='band2Color']");
+        var band3Ctrl = $("select[name='band3Color']");
+        var toleranceBandCtrl = $("select[name='toleranceBandColor']");
+
+        // display elements
+        var readout = $("#readout span.value");
+        var minReadout = $("#readout span.min-value");
+        var maxReadout = $("#readout span.max-value");
+
+        var band1 = $("#band1");
+        var band2 = $("#band2");
+        var band3 = $("#band3");
+        var toleranceBand = $("#tolerance-band");
+
+        var errorContainer = $("#error-message-container");
+        var error = $("#error-message");
+
+
+
+        function calculateMin(value, tolerance) {
+            return Math.round((1 - tolerance) * value * 100) / 100;
+        }
+
+        function calculateMax(value, tolerance) {
+            return Math.round((1 + tolerance) * value * 100) / 100;
+        }
+
+        function updateResultDisplay(result, min, max) {
+            readout.html(result + "&#8486");
+            minReadout.html(min);
+            maxReadout.html(max);
+
+            band1.css('background-color', band1Ctrl.val());
+            band2.css('background-color', band2Ctrl.val());
+            band3.css('background-color', band3Ctrl.val());
+            toleranceBand.css('background-color', toleranceBandCtrl.val());
+        }
+
+        function showErrorMessage(message) {
+            error.html(message);
+            errorContainer.removeClass('hidden');
+        }
+
+        function clearErrorMessage() {
+            errorContainer.addClass('hidden');
+            error.html('');
+        }
+
+        function disableCalculateButton() {
+            $("button#calculate").attr('disabled', true);
+        }
+
+        function enableCalculateButton() {
+            $("button#calculate").removeAttr('disabled');
+        }
+
+        function updateControlLocks() {
+            // if band 2 is blank, disable band 3
+            var band2 = band2Ctrl.val();
+            var band3 = band2Ctrl.val();
+
+            if (band2.length > 0) {
+                // unlock band3
+                band3Ctrl.removeAttr('disabled');
+            }
+            else {
+                band3Ctrl.val('');
+                band3Ctrl.attr('disabled', true);
+            }
+        }
+
+        function sendCalculationRequest() {
+            disableCalculateButton();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CalculateOhmValue")',
+                dataType: 'json',
+                data: {
+                    band1Color: band1Ctrl.val(),
+                    band2Color: band2Ctrl.val(),
+                    band3Color: band3Ctrl.val(),
+                    toleranceBandColor: $("select[name='toleranceBandColor']").val()
+                },
+                success: function (data) {
+                    console.log("got data:", data);
+                    var calcSucceeded = data.success;
+
+                    if (calcSucceeded) {
+                        var result = data.result;
+                        var min = calculateMin(data.result, data.tolerance);
+                        var max = calculateMax(data.result, data.tolerance);
+                        updateResultDisplay(result, min, max);
+
+                    }
+                    else {
+                        // application error
+                        showErrorMessage(data.message);
+                    }
+                    enableCalculateButton();
+
+
+                }
+            });
+        }
+
+        // setup calcuation handler
+        $("button#calculate").click(sendCalculationRequest);  
+        $("select[name='band2Color']").change(updateControlLocks);
+        $("select[name='band3Color']").change(updateControlLocks);
+
+        // initialize control state
+        updateControlLocks();
+        clearErrorMessage();
+    });
+
+    </script>
+}
