@@ -45,9 +45,6 @@ namespace OhmValueCalculatorApp.Controllers
             CalculateOhmValueUseCase useCase = new CalculateOhmValueUseCase();
             CalculateOhmValueUseCaseResponse response = useCase.Execute(request);
 
-            //StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
-            //int calculation = calculator.CalculateOhmValue(band1, band2, band3, band4);
-
             return Json(new {
                             success = response.success,
                             message = response.message,
