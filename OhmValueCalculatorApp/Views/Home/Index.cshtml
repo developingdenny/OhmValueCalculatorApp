@@ -204,11 +204,14 @@
             }
         }
 
-        function resetSimulation() {
+        function resetDisplay() {
             band1.css('background-color', '');
             band2.css('background-color', '');
             band3.css('background-color', '');
             toleranceBand.css('background-color', '');
+            readout.html("------------&#8486");
+            minReadout.html("");
+            maxReadout.html("");
         }
 
         function sendCalculationRequest() {
@@ -250,7 +253,8 @@
         $("button#calculate").click(sendCalculationRequest);  
         $("select[name='band2Color']").change(updateControlLocks);
         $("select[name='band3Color']").change(updateControlLocks);
-        $("select[name^='band']").change(resetSimulation);
+        $("select[name^='band']").change(resetDisplay);
+        $("select[name^='toleranceBandColor']").change(resetDisplay);
 
         // initialize control state
         updateControlLocks();
