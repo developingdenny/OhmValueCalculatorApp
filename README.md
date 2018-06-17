@@ -39,10 +39,6 @@ Select "Test" -> "Run" ->  "All Tests" from the Visual Studio menu
 
 * **DevelopingDenny** - *Initial work* - [developingdenny](https://github.com/developingdenny)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Acknowledgments
 
 * Global Custom Commerce provided the inspiration for this project
