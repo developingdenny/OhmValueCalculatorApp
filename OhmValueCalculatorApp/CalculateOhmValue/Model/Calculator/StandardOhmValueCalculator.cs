@@ -8,8 +8,6 @@ namespace OhmValueCalculatorApp.Models
 {
     public class StandardOhmValueCalculator : IOhmValueCalculator
     {
-        const int NOT_FOUND = -1;
-
         private ResistorColorCodes resistorColorCodes = new ResistorColorCodes();
 
         public double CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor, string bandDColor)
@@ -40,10 +38,10 @@ namespace OhmValueCalculatorApp.Models
             }
 
             // translate each band color to corresponding digits
-            firstFigure = resistorColorCodes.translateColorCodeToDigit(bandAColor);
-            if (bandBProvided) secondFigure = resistorColorCodes.translateColorCodeToDigit(bandBColor);
-            if (bandCProvided) decimalMultiplier = resistorColorCodes.translateColorCodeToDigit(bandCColor);
-            if (bandDProvided) toleranceValue = resistorColorCodes.translateToleranceColor(bandDColor);
+            firstFigure = resistorColorCodes.TranslateColorCodeToDigit(bandAColor);
+            if (bandBProvided) secondFigure = resistorColorCodes.TranslateColorCodeToDigit(bandBColor);
+            if (bandCProvided) decimalMultiplier = resistorColorCodes.TranslateColorCodeToDigit(bandCColor);
+            if (bandDProvided) toleranceValue = resistorColorCodes.TranslateToleranceColor(bandDColor);
             
             // run digits through formula to generate result
             if (!bandBProvided)

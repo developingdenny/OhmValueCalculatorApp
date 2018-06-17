@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OhmValueCalculatorApp.CalculateOhmValue;
-using OhmValueCalculatorApp.Models;
 
 namespace OhmValueCalculatorApp.Controllers
 {
@@ -37,14 +36,14 @@ namespace OhmValueCalculatorApp.Controllers
             string band3 = Request.Form["band3Color"];
             string band4 = Request.Form["toleranceBandColor"];
 
-            CalculateOhmValueRequest request = new CalculateOhmValueRequest();
+            CalculateOhmValueUseCaseRequest request = new CalculateOhmValueUseCaseRequest();
             request.bandAColor = band1;
             request.bandBColor = band2;
             request.bandCColor = band3;
             request.toleranceBandColor = band4;
 
             CalculateOhmValueUseCase useCase = new CalculateOhmValueUseCase();
-            CalculateOhmValueResponse response = useCase.execute(request);
+            CalculateOhmValueUseCaseResponse response = useCase.Execute(request);
 
             //StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
             //int calculation = calculator.CalculateOhmValue(band1, band2, band3, band4);

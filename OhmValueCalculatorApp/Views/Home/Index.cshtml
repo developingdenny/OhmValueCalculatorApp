@@ -243,8 +243,9 @@
                         showErrorMessage(data.message);
                     }
                     enableCalculateButton();
-
-
+                },
+                error: function (error) {
+                    showErrorMessage(error);
                 }
             });
         }

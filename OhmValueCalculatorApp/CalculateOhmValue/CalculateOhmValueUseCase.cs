@@ -10,9 +10,9 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
     {
         private ResistorColorCodes resistorColorCode = new ResistorColorCodes();
 
-        private CalculateOhmValueResponse response = new CalculateOhmValueResponse();
+        private CalculateOhmValueUseCaseResponse response = new CalculateOhmValueUseCaseResponse();
 
-        private bool IsValidRequest(CalculateOhmValueRequest request)
+        private bool IsValidRequest(CalculateOhmValueUseCaseRequest request)
         {
             bool bandAColorProvided = request.bandAColor.Length > 1;
             bool bandBColorProvided = request.bandBColor.Length > 1;
@@ -65,7 +65,7 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
             // test tolerance band
             if (toleranceBandProvided)
             {
-                if (!resistorColorCode.isValidToleranceBandColor(request.toleranceBandColor))
+                if (!resistorColorCode.IsValidToleranceBandColor(request.toleranceBandColor))
                 {
                     createErrorResponse("Tolerance band color is invalid. Cannot be " + request.toleranceBandColor);
                     return false;
@@ -83,7 +83,7 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
             response.message = errorMessage;
         }
 
-        public CalculateOhmValueResponse execute(CalculateOhmValueRequest request)
+        public CalculateOhmValueUseCaseResponse Execute(CalculateOhmValueUseCaseRequest request)
         {
             // use the standard calculator to execute the calcuation
 
@@ -97,7 +97,7 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
             try
             {
                 response.calculatedValue = calculator.CalculateOhmValue(request.bandAColor, request.bandBColor, request.bandCColor, request.toleranceBandColor);
-                response.toleranceValue = resistorColorCode.translateToleranceColor(request.toleranceBandColor);
+                response.toleranceValue = resistorColorCode.TranslateToleranceColor(request.toleranceBandColor);
                 response.success = true;
             }
             catch (Exception e){

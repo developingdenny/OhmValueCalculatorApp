@@ -64,7 +64,7 @@ namespace OhmValueCalculatorAppUnitTests
 
             foreach (string color in colors)
             {
-                result = resistorColorCodes.isValidToleranceBandColor(color);
+                result = resistorColorCodes.IsValidToleranceBandColor(color);
 
                 Assert.IsTrue(result);
             }
@@ -76,7 +76,7 @@ namespace OhmValueCalculatorAppUnitTests
             ResistorColorCodes resistorColorCodes = new ResistorColorCodes();
             string color = "brown";
 
-            double digit = resistorColorCodes.translateColorCodeToDigit(color);
+            double digit = resistorColorCodes.TranslateColorCodeToDigit(color);
 
             Assert.AreEqual(1, digit);
         }
@@ -91,7 +91,7 @@ namespace OhmValueCalculatorAppUnitTests
 
             foreach (string color in colors)
             {
-                digit = resistorColorCodes.translateColorCodeToDigit(color);
+                digit = resistorColorCodes.TranslateColorCodeToDigit(color);
 
                 Assert.AreEqual(expectedDigit, digit);
 
@@ -107,7 +107,7 @@ namespace OhmValueCalculatorAppUnitTests
             ResistorColorCodes resistorColorCodes = new ResistorColorCodes();
             string color = "beige";
 
-            double digit = resistorColorCodes.translateColorCodeToDigit(color);
+            double digit = resistorColorCodes.TranslateColorCodeToDigit(color);
            
             // should never reach this assertion
             Assert.IsFalse(true);
@@ -120,7 +120,7 @@ namespace OhmValueCalculatorAppUnitTests
             ResistorColorCodes resistorColorCodes = new ResistorColorCodes();
             string color = "gold";
 
-            double digit = resistorColorCodes.translateToleranceColor(color);
+            double digit = resistorColorCodes.TranslateToleranceColor(color);
 
             Assert.AreEqual(0.05, digit);
         }
@@ -133,7 +133,7 @@ namespace OhmValueCalculatorAppUnitTests
             ResistorColorCodes resistorColorCodes = new ResistorColorCodes();
             string color = "purple";
 
-            double digit = resistorColorCodes.translateToleranceColor(color);
+            double digit = resistorColorCodes.TranslateToleranceColor(color);
 
             // should never reach this assertion
             Assert.IsFalse(true);
