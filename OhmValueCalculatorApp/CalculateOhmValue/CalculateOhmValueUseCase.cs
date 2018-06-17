@@ -83,8 +83,6 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
 
         public CalculateOhmValueUseCaseResponse Execute(CalculateOhmValueUseCaseRequest request)
         {
-            // use the standard calculator to execute the calcuation
-
             // validate the request : if invalid, set response object to invalid and retrn it
             if (!IsValidRequest(request))
             {
