@@ -19,62 +19,60 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
             bool bandCColorProvided = request.bandCColor.Length > 1;
             bool toleranceBandProvided = request.toleranceBandColor.Length > 1;
 
+            bool isValid = true;
 
             // ensure at least band 1 is provided
             if (!bandAColorProvided)
             {
                 // send error message
                 createErrorResponse("Must provide first band color");
-                return false;
+                isValid = false;
             }
 
             // verify no gap in band colors specified
-            if (bandCColorProvided && !bandBColorProvided)
+            if (isValid && bandCColorProvided && !bandBColorProvided)
             {
                 createErrorResponse("Can not specify third band without a second");
-                return false;
+                isValid = false;
             }
 
-
             // verify the band colors provided are valid by consulting with dictionary
-            if (!resistorColorCode.isValidBandAtoCColor(request.bandAColor))
+            if (isValid && !resistorColorCode.isValidBandAtoCColor(request.bandAColor))
             {
-                createErrorResponse("Band A color is invalid. Cannot be " + request.bandAColor);
-                return false;
+                createErrorResponse("Band A color is invalid. Cannot be " + request.bandAColor + ".");
+                isValid = false;
             }
 
             // test optional band colors
-            if (bandBColorProvided)
+            if (isValid && bandBColorProvided)
             {
-                if (!resistorColorCode.isValidBandAtoCColor(request.bandAColor))
+                if (!resistorColorCode.isValidBandAtoCColor(request.bandBColor))
                 {
-                    createErrorResponse("Band B color is invalid. Cannot be " + request.bandBColor);
-                    return false;
+                    createErrorResponse("Band B color is invalid. Cannot be " + request.bandBColor + ".");
+                    isValid = false;
                 }
             }
 
-            if (bandCColorProvided)
+            if (isValid && bandCColorProvided)
             {
                 if (!resistorColorCode.isValidBandAtoCColor(request.bandCColor))
                 {
-                    createErrorResponse("Band C color is invalid. Cannot be " + request.bandCColor);
-                    return false;
+                    createErrorResponse("Band C color is invalid. Cannot be " + request.bandCColor + ".");
+                    isValid = false;
                 }
             }
 
             // test tolerance band
-            if (toleranceBandProvided)
+            if (isValid && toleranceBandProvided)
             {
                 if (!resistorColorCode.IsValidToleranceBandColor(request.toleranceBandColor))
                 {
-                    createErrorResponse("Tolerance band color is invalid. Cannot be " + request.toleranceBandColor);
-                    return false;
+                    createErrorResponse("Tolerance band color is invalid. Cannot be " + request.toleranceBandColor + ".");
+                    isValid = false;
                 }
             }
 
-            // if any of these fail, form an Error response object and return it
-
-            return true;
+            return isValid;
         }
 
         private void createErrorResponse(string errorMessage)

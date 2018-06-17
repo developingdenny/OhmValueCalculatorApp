@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculateOhmValue\CalculateOhmValueUseCaseTest.cs" />
     <Compile Include="OhmValueCalculatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResistorColorCodesTest.cs" />

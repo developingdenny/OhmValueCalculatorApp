@@ -5,6 +5,8 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
 {
     public class ResistorColorCodes
     {
+        private const int NOT_FOUND = -1;
+
         private const string EMPTY_STRING = "";
         private const string Pink = "pink";
         private const string Silver = "silver";
@@ -63,7 +65,7 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
 
             legendColorIdx = Array.IndexOf(bandColorLegend, normalizedBandColor);
 
-            return legendColorIdx != -1;
+            return legendColorIdx != NOT_FOUND;
         }
 
         // determine if the color belongs to standard band A to C colors
