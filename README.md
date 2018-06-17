@@ -8,7 +8,7 @@ Converts the ohm value rating of a resistor when provided with its band color se
 
 ## Getting Started
 
-1. Clone or download this repository
+1. Clone or download (and extract) this repository
 
 2. Open the __OhmValueCalculatorApp.sln__ solution file using Microsoft Visual Studio
 
