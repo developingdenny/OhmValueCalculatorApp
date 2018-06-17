@@ -8,7 +8,7 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
 {
     public class CalculateOhmValueUseCase
     {
-        private ResistorColorCode resistorColorCode = new ResistorColorCode();
+        private ResistorColorCodes resistorColorCode = new ResistorColorCodes();
 
         private CalculateOhmValueResponse response = new CalculateOhmValueResponse();
 

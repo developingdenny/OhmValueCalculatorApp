@@ -151,7 +151,7 @@
     <Compile Include="CalculateOhmValue\CalculateOhmValueRequest.cs" />
     <Compile Include="CalculateOhmValue\CalculateOhmValueResponse.cs" />
     <Compile Include="CalculateOhmValue\CalculateOhmValueUseCase.cs" />
-    <Compile Include="CalculateOhmValue\ResistorColorCode.cs" />
+    <Compile Include="CalculateOhmValue\ResistorColorCodes.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

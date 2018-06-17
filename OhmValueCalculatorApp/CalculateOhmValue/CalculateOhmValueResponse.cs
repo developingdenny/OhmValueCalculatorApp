@@ -9,7 +9,7 @@ namespace OhmValueCalculatorApp.CalculateOhmValue
     {
         public bool success;
         public string message;
-        public int calculatedValue;
+        public double calculatedValue;
         public double toleranceValue;
     }
 }

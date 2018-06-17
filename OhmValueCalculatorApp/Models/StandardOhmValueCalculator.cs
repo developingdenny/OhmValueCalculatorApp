@@ -2,81 +2,65 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using OhmValueCalculatorApp.CalculateOhmValue;
 
 namespace OhmValueCalculatorApp.Models
 {
     public class StandardOhmValueCalculator : IOhmValueCalculator
     {
-        private const string Silver = "silver";
-        private const string Gold = "gold";
-        private const string Black = "black";
-        private const string Brown = "brown";
-        private const string Red = "red";
-        private const string Orange = "orange";
-        private const string Yellow = "yellow";
-        private const string Green = "green";
-        private const string Blue = "blue";
-        private const string Violet = "violet";
-        private const string Gray = "gray";
-        private const string White = "white";
+        const int NOT_FOUND = -1;
 
-        private string[] valueBandColorCodes = new string[] { Black, Brown, Red, Orange, Yellow, Green, Blue, Violet, Gray, White };
-        private string[] toleranceBandColorCodes = new string[] { Silver, Gold, Brown, Red, Yellow, Green, Blue, Violet, Gray };
+        private ResistorColorCodes resistorColorCodes = new ResistorColorCodes();
 
-        private Boolean isEmptyBandColor(string bandColor)
+        public double CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor, string bandDColor)
         {
-            return bandColor == "";
-        }
+            long firstFigure = 0;
+            long secondFigure = 0;
+            long decimalMultiplier = 0;
+            double toleranceValue = 0;
+            double decimalMultiplierScalar = 0;
 
-        //private Boolean isValidBandColor(string bandColor, string[] bandColorLegend)
-        //{
-        //    int legendColorIdx;
-        //    string normalizedBandColor = bandColor.ToLower();
+            double ohmValue;
 
-        //    legendColorIdx = Array.IndexOf(valueBandColorCodes, normalizedBandColor);
+            bool bandAProvided = bandAColor.Length > 0;
+            bool bandBProvided = bandBColor.Length > 0;
+            bool bandCProvided = bandCColor.Length > 0;
+            bool bandDProvided = bandDColor.Length > 0;
 
-        //    return legendColorIdx != -1;
-        //}
+            // validate input scenario
+            if (!bandAProvided)
+            {
+                throw new ArgumentException("Must provide valid bandAColor");
+            }
 
-        private int translateColorCodeToDigit(string bandColor)
-        {
-            string normalizedBandColor = bandColor.ToLower();
-            int digit;
-
-            // find the index of the normalized color and return it.
-            digit = Array.IndexOf(valueBandColorCodes, normalizedBandColor);
-
-            return digit;
-        }
-
-        public int CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor, string bandDColor)
-        {
-            int firstFigure;
-            int secondFigure;
-            int decimalMultiplier;
-            int toleranceValue;
-            double decimalMultiplierScalar;
+            // band b not provided but band c provided
+            if (!bandBProvided && bandCProvided)
+            {
+                throw new ArgumentException("Must provide valid bandBColor when bandCColor provided");
+            }
 
             // translate each band color to corresponding digits
-            firstFigure = translateColorCodeToDigit(bandAColor);
-            secondFigure = translateColorCodeToDigit(bandBColor);
-            decimalMultiplier = translateColorCodeToDigit(bandCColor);
-            toleranceValue = translateColorCodeToDigit(bandDColor);
-
-            if (secondFigure == -1)
+            firstFigure = resistorColorCodes.translateColorCodeToDigit(bandAColor);
+            if (bandBProvided) secondFigure = resistorColorCodes.translateColorCodeToDigit(bandBColor);
+            if (bandCProvided) decimalMultiplier = resistorColorCodes.translateColorCodeToDigit(bandCColor);
+            if (bandDProvided) toleranceValue = resistorColorCodes.translateToleranceColor(bandDColor);
+            
+            // run digits through formula to generate result
+            if (!bandBProvided)
             {
-                return firstFigure;
+                return (Int64)firstFigure;
             }
 
-            if (decimalMultiplier == -1)
+            if (!bandCProvided)
             {
-                return firstFigure * 10 + secondFigure;
+                return (Int64)(firstFigure * 10 + secondFigure);
             }
-
-            // run digits through a formula to generate result
+            
             decimalMultiplierScalar = Math.Pow(10, decimalMultiplier);
 
-            return (firstFigure * 10 + secondFigure) * Convert.ToInt32(decimalMultiplierScalar);
+            ohmValue = (firstFigure * 10 + secondFigure) * decimalMultiplierScalar;
+
+            return ohmValue;
         }
 
     }

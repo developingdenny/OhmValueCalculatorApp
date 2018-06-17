@@ -55,6 +55,9 @@
                                 <span class="input-group-addon">Third Band</span>
                                 <select name="band3Color" class="form-control">
                                     <option value="">None</option>
+                                    <option value="pink">Pink</option>
+                                    <option value="silver">Silver</option>
+                                    <option value="gold">Gold</option>
                                     <option value="black">Black</option>
                                     <option value="brown">Brown</option>
                                     <option value="red">Red</option>
@@ -71,14 +74,15 @@
                             <label class="tolerance-band">Tolerance Band Color</label>
                             <div class="tolerance-band input-group">
                                 <select name="toleranceBandColor" class="form-control">
-                                    <option value="">None</option>
-                                    <option value="silver">Silver</option>
-                                    <option value="gold">Gold</option>
-                                    <option value="brown">Brown</option>
-                                    <option value="red">Red</option>
-                                    <option value="green">Green</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="violet">Violet</option>
+                                    <option value="">None (&plusmn;20%)</option>
+                                    <option value="silver">Silver (&plusmn;10%)</option>
+                                    <option value="gold">Gold (&plusmn;5%)</option>
+                                    <option value="brown">Brown (&plusmn;1%)</option>
+                                    <option value="red">Red (&plusmn;2%)</option>
+                                    <option value="green">Green (&plusmn;0.5%)</option>
+                                    <option value="blue">Blue (&plusmn;0.25%)</option>
+                                    <option value="violet">Violet (&plusmn;0.1%)</option>
+                                    <option value="violet">Gray (&plusmn;0.05%)</option>
                                 </select>
                             </div>
 
@@ -148,14 +152,12 @@
         var errorContainer = $("#error-message-container");
         var error = $("#error-message");
 
-
-
         function calculateMin(value, tolerance) {
-            return Math.round((1 - tolerance) * value * 100) / 100;
+            return Math.round((1 - tolerance) * value * 1000) / 1000;
         }
 
         function calculateMax(value, tolerance) {
-            return Math.round((1 + tolerance) * value * 100) / 100;
+            return Math.round((1 + tolerance) * value * 1000) / 1000;
         }
 
         function updateResultDisplay(result, min, max) {
@@ -202,6 +204,13 @@
             }
         }
 
+        function resetSimulation() {
+            band1.css('background-color', '');
+            band2.css('background-color', '');
+            band3.css('background-color', '');
+            toleranceBand.css('background-color', '');
+        }
+
         function sendCalculationRequest() {
             disableCalculateButton();
 
@@ -220,7 +229,7 @@
                     var calcSucceeded = data.success;
 
                     if (calcSucceeded) {
-                        var result = data.result;
+                        var result = Math.round(data.result * 1000) / 1000;
                         var min = calculateMin(data.result, data.tolerance);
                         var max = calculateMax(data.result, data.tolerance);
                         updateResultDisplay(result, min, max);
@@ -241,6 +250,7 @@
         $("button#calculate").click(sendCalculationRequest);  
         $("select[name='band2Color']").change(updateControlLocks);
         $("select[name='band3Color']").change(updateControlLocks);
+        $("select[name^='band']").change(resetSimulation);
 
         // initialize control state
         updateControlLocks();

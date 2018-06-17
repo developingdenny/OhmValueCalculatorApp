@@ -15,12 +15,12 @@ namespace OhmValueCalculatorAppUnitTests
             string bandCColor = "yellow";
             string bandDColor = "gold";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
 
-            Assert.AreEqual(value.GetType(), typeof(int));
+            Assert.AreEqual(value.GetType(), typeof(double));
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace OhmValueCalculatorAppUnitTests
             string bandCColor = "";
             string bandDColor = "";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
@@ -48,7 +48,7 @@ namespace OhmValueCalculatorAppUnitTests
             string bandCColor = "";
             string bandDColor = "";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
@@ -64,7 +64,7 @@ namespace OhmValueCalculatorAppUnitTests
             string bandCColor = "brown";
             string bandDColor = "";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
@@ -80,7 +80,7 @@ namespace OhmValueCalculatorAppUnitTests
             string bandCColor = "blue";
             string bandDColor = "";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
@@ -93,10 +93,10 @@ namespace OhmValueCalculatorAppUnitTests
         {
             string bandAColor = "white";
             string bandBColor = "white";
-            string bandCColor = "gray";
+            string bandCColor = "white";
             string bandDColor = "";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
@@ -112,13 +112,101 @@ namespace OhmValueCalculatorAppUnitTests
             string bandCColor = "green";
             string bandDColor = "gold";
 
-            int value;
+            double value;
             StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
 
             value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
 
             Assert.AreEqual(2700000, value);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Must provide valid bandAColor")]
+        public void StandardOhmValueCalculator_CalculateOhmValue_WithInValidInputs_MissingBandA_ThrowsException()
+        {
+            // setup invalid arguments
+            string bandAColor = "";
+            string bandBColor = "red";
+            string bandCColor = "green";
+            string bandDColor = "gold";
+
+            double value;
+            StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
+
+            value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
+
+            // should never reach this assertion
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Must provide valid bandBColor when bandCColor provided")]
+        public void StandardOhmValueCalculator_CalculateOhmValue_WithInValidInputs_MissingBandB_HasBandC_ThrowsException()
+        {
+            // setup invalid arguments
+            string bandAColor = "blue";
+            string bandBColor = "";
+            string bandCColor = "green";
+            string bandDColor = "gold";
+
+            double value;
+            StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
+
+            value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
+
+            // should never reach this assertion
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        public void StandardOhmValueCalculator_CalculateOhmValue_WithValidInputs_ReturnsAccurateThousandthsFractionalResults()
+        {
+            string bandAColor = "red";
+            string bandBColor = "violet";
+            string bandCColor = "pink";
+            string bandDColor = "gold";
+
+            double value;
+            StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
+
+            value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
+
+            Assert.AreEqual(0.027, value, 0.001);
+        }
+
+        [TestMethod]
+        public void StandardOhmValueCalculator_CalculateOhmValue_WithValidInputs_ReturnsAccurateHundredthsFractionalResults()
+        {
+            string bandAColor = "green";
+            string bandBColor = "brown";
+            string bandCColor = "silver";
+            string bandDColor = "gold";
+
+            double value;
+            StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
+
+            value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
+
+            Assert.AreEqual(0.51, value, 0.01);
+        }
+
+
+        [TestMethod]
+        public void StandardOhmValueCalculator_CalculateOhmValue_WithValidInputs_ReturnsAccurateTenthsFractionalResults()
+        {
+            string bandAColor = "orange";
+            string bandBColor = "yellow";
+            string bandCColor = "gold";
+            string bandDColor = "gold";
+
+            double value;
+            StandardOhmValueCalculator calculator = new StandardOhmValueCalculator();
+
+            value = calculator.CalculateOhmValue(bandAColor, bandBColor, bandCColor, bandDColor);
+
+            Assert.AreEqual(3.4, value, 0.1);
+        }
+
 
     }
 }

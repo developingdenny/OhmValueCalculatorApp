@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="OhmValueCalculatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResistorColorCodesTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
